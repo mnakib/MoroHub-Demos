@@ -8,5 +8,5 @@ Create a container with the following settings:
 - Use the Apache httpd image from Docker Hub 
 
 ```bash
-$ cat nginx-deployment.yaml
+$ podman run --name moro-web-1 --detach -p 8080:80 httpd
 ```
