@@ -6,20 +6,23 @@ $ podman run --name db -d -e MYSQL_ROOT_PASSWORD=root -e MYSQL_USER=ilia -e MYSQ
 
 ```bash
 $ podman exec -it db /bin/bash
+```
+
+```bash
 # env
 ```
 
 Get the IP address of the `db` container
 
 ```bash
-podman inspect db
+$ podman inspect db
 ```
 
 Pull the WordPress image and run a container named `wp` with a port redirection from 8080 on the host to port 80 to container
 
 ```bash
-podman pull wordpress
-podman run --name wp -d -p 8080:80 wordpress
+$ podman pull wordpress
+$ podman run --name wp -d -p 8080:80 wordpress
 
 ```
 
