@@ -1,35 +1,35 @@
 # Live Demonstration 1: Provisioning Containers with Code
 
 ```bash
-$ cat nginx-deployment.yaml
+$ cat apache-deployment.yaml
 ```
 ```yaml
 apiVersion: apps.openshift.io/v1
 kind: Deployment
 metadata:
-  name: nginx-app
+  name: apache-app
 spec:
   replicas: 1
   selector:
-    app: nginx-app
+    app: apache-app
   template:
     metadata:
       labels:
-        app: nginx-app
+        app: apache-app
     spec:
       containers:
-      - name: nginx
-        image: nginx:latest
+      - name: apache
+        image: quay.io/fedora/httpd-24
         ports:
         - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
+  name: apache-service
 spec:
   selector:
-    app: nginx-app
+    app: apache-app
   ports:
     - protocol: TCP
       port: 8080
@@ -37,17 +37,17 @@ spec:
 ```
 
 ```bash
-$ cat nginx-route.yaml
+$ cat apache-route.yaml
 ```
 ```yaml
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: nginx-route
+  name: apache-route
 spec:
   to:
     kind: Service
-    name: nginx-service
+    name: apache-service
   port:
     targetPort: 8080
   tls:
@@ -70,13 +70,13 @@ $ oc new-project my-iac-project
 Create the deployment
 
 ```bash
-$ oc apply -f nginx-deployment.yaml
+$ oc apply -f apache-deployment.yaml
 ```
 
 Publish the deployment using an Edge route
 
 ```bash
-$ oc apply -f nginx-route.yaml
+$ oc apply -f apache-route.yaml
 ```
 
 Show `oc get all` to confirm resources.
